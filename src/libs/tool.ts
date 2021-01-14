@@ -16,7 +16,16 @@ export const getCookie = function (name: string) {
 };
 //删除cookie
 export const removeCookie = function (name: string, path = "/") {
-  Cookie.set(name, { path: path });
+  Cookie.remove(name, { path: path });
+};
+
+//判断一个数组是否为另一个数组的子集
+export const isSubset = function (targetarr: Array<any>, arr: Array<any>) {
+  return targetarr.every((v) => arr.includes(v));
+};
+//判断要查询的数组是否至少有一个元素包含在目标数组中
+export const hasOneOf = (targetarr: Array<any>, arr: Array<any>) => {
+  return targetarr.some((_) => arr.indexOf(_) > -1);
 };
 //如果传入的数值小于10，即位数只有1位，则在前面补充0
 const getHandledValue = function (num: number): string {

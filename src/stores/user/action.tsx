@@ -36,10 +36,3 @@ export const setImgPath: actionFn<string> = function (param) {
     type: set_img_path,
   };
 };
-
-export const setshowMenu: actionFn<boolean> = function (param) {
-  return {
-    param,
-    type: set_show_menu,
-  };
-};

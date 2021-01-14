@@ -17,15 +17,13 @@ export interface userInter {
   identity: string;
   access: string[];
   imgPath: string;
-  isShowMenu: boolean;
 }
 
 const initUser: userInter = {
   name: "",
   identity: "",
-  access: [],
+  access: ["商品管理", "信息管理", "数据分析", "用户设置", "权限设置"],
   imgPath: "",
-  isShowMenu: false,
 };
 
 export default function user(state = initUser, action: action) {
@@ -38,8 +36,6 @@ export default function user(state = initUser, action: action) {
       return { ...state, access: action.param };
     case set_img_path:
       return { ...state, imgPath: action.param };
-    case set_show_menu:
-      return { ...state, isShowMenu: action.param };
     default:
       return state;
   }

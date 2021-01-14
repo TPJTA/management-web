@@ -4,7 +4,12 @@ import { Form, Input, Button, Select, Checkbox } from "antd";
 import { UserOutlined, LockOutlined, TeamOutlined } from "@ant-design/icons";
 import { storeType } from "@/stores";
 import { Dispatch } from "redux";
-import { setName, setIdentity, setImgPath } from "@/stores/user/action";
+import {
+  setName,
+  setIdentity,
+  setImgPath,
+  setAccess,
+} from "@/stores/user/action";
 import { setCookie, removeCookie, getCookie } from "@/libs/tool";
 const storeToProps = (store: storeType) => ({
   userInformation: store.user,
@@ -19,42 +24,56 @@ const dispatchToProps = (dispatch: Dispatch) => ({
   setImgPath: (img: string) => {
     dispatch(setImgPath(img));
   },
+  setAccess: (access: string[]) => {
+    dispatch(setAccess(access));
+  },
 });
 interface propsType {
   setName: (name: string) => void;
   setIdentity: (identity: string) => void;
   setImgPath: (img: string) => void;
+  setAccess: (access: string[]) => void;
   userInformation: object;
+  changePage: (path: string) => void;
 }
 
 const LoginForm: React.FC<propsType> = function (props: propsType) {
   const [isLoading, setLoading] = useState(false);
-  const [passWord, setPassWord] = useState("");
+  const [form] = Form.useForm();
 
-  // useEffect(() => {
-  //   if (getCookie("password")) {
-  //     let str: string = getCookie("password");
-  //     setPassWord(str);
-  //   }
-  // }, []);
+  useEffect(() => {
+    let str = getCookie("user");
+    if (str) {
+      form.setFieldsValue(JSON.parse(str));
+    }
+  }, []);
 
   const submit = (value: any) => {
     setLoading(true);
+    //模拟登录验证
     setTimeout(() => {
-      console.log(props);
+      setCookie("TOKEN_KEY", "ashdujhsa");
       if (value.remember) {
-        setCookie("password", value.password);
+        setCookie("user", value);
       } else {
-        removeCookie("password");
+        removeCookie("user");
       }
       props.setName(value.username);
       props.setIdentity(value.identity);
       props.setImgPath("@/assets/images/head.jpg");
+      props.setAccess([
+        "商品管理",
+        "信息管理",
+        "数据分析",
+        "用户设置",
+        "权限设置",
+      ]);
+      props.changePage("/");
     }, 1000);
   };
 
   return (
-    <Form name="login_form" onFinish={submit}>
+    <Form name="login_form" onFinish={submit} form={form}>
       <div className="login-select-outter">
         <div className="login-select-prefix">
           <TeamOutlined className="login-select-prefix-icon" />
@@ -92,7 +111,6 @@ const LoginForm: React.FC<propsType> = function (props: propsType) {
           size="large"
           addonBefore={<LockOutlined />}
           placeholder="请输入密码"
-          value={passWord}
         />
       </Form.Item>
       <Form.Item>

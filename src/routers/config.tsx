@@ -1,4 +1,5 @@
 import React, { lazy, LazyExoticComponent } from "react";
+import { hasOneOf } from "@/libs/tool";
 export interface routeItem {
   name: string;
   show: boolean;
@@ -9,7 +10,11 @@ export interface routeItem {
   icon?: React.ComponentClass | React.FC;
   children?: routeItem[];
 }
-export const routers: routeItem[] = [
+
+export const routers = (
+  isLogin: boolean,
+  access: string[] = []
+): routeItem[] => [
   {
     name: "登录",
     path: "/login",
@@ -41,7 +46,7 @@ export const routers: routeItem[] = [
   {
     name: "基本布局",
     path: "/",
-    show: true,
+    show: isLogin,
     exact: false,
     component: lazy(() => import("@/components/layOut")),
     children: [
@@ -55,20 +60,20 @@ export const routers: routeItem[] = [
       {
         name: "管理页面",
         path: "/manage",
-        show: true,
+        show: hasOneOf(["商品管理", "信息管理"], access),
         exact: false,
         children: [
           {
             name: "商品管理",
             path: "/manage/goods",
-            show: true,
+            show: access.includes("商品管理"),
             exact: true,
             component: lazy(() => import("@/pages/manage/goods")),
           },
           {
             name: "信息管理",
             path: "/manage/basicMessage",
-            show: true,
+            show: access.includes("信息管理"),
             exact: true,
             component: lazy(() => import("@/pages/manage/basicMessage")),
           },
@@ -77,7 +82,9 @@ export const routers: routeItem[] = [
             path: "/manage",
             show: true,
             exact: true,
-            redirect: "/manage/goods",
+            redirect: access.includes("商品管理")
+              ? "/manage/goods"
+              : "/manage/basicMessage",
           },
           {
             name: "404跳转",
@@ -90,27 +97,27 @@ export const routers: routeItem[] = [
       {
         name: "数据分析",
         exact: true,
-        show: true,
+        show: access.includes("数据分析"),
         path: "/analysis",
         component: lazy(() => import("@/pages/analysis")),
       },
       {
         name: "系统设置",
         path: "/setting",
-        show: true,
+        show: hasOneOf(["用户设置", "权限设置"], access),
         exact: false,
         children: [
           {
             name: "用户设置",
             path: "/setting/user",
-            show: true,
+            show: access.includes("用户设置"),
             exact: true,
             component: lazy(() => import("@/pages/setting/userSetting")),
           },
           {
             name: "权限设置",
             path: "/setting/access",
-            show: true,
+            show: access.includes("权限设置"),
             exact: true,
             component: lazy(() => import("@/pages/setting/accessSetting")),
           },
@@ -119,7 +126,9 @@ export const routers: routeItem[] = [
             path: "/setting",
             exact: true,
             show: true,
-            redirect: "/setting/user",
+            redirect: access.includes("用户设置")
+              ? "/setting/user"
+              : "/setting/access",
           },
           {
             name: "404跳转",
@@ -136,5 +145,11 @@ export const routers: routeItem[] = [
         redirect: "/404",
       },
     ],
+  },
+  {
+    name: "404跳转",
+    show: true,
+    exact: true,
+    redirect: "/404",
   },
 ];
