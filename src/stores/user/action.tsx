@@ -2,10 +2,9 @@ export const set_name = "set_name";
 export const set_identity = "set_identity";
 export const set_access = "set_access";
 export const set_img_path = "set_img_path";
-export const set_show_menu = "set_show_menu";
-
+export const login_out = "login_out";
 interface actionFn<T = any> {
-  (param: T): { type: string; param: T };
+  (param: T): { type: string; param?: T };
 }
 export type actionParamType = string | string[] | boolean | undefined;
 
@@ -34,5 +33,11 @@ export const setImgPath: actionFn<string> = function (param) {
   return {
     param,
     type: set_img_path,
+  };
+};
+
+export const loginOut: actionFn<void> = function (param) {
+  return {
+    type: login_out,
   };
 };

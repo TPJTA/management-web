@@ -60,7 +60,6 @@ const LoginForm: React.FC<propsType> = function (props: propsType) {
       }
       props.setName(value.username);
       props.setIdentity(value.identity);
-      props.setImgPath("@/assets/images/head.jpg");
       props.setAccess([
         "商品管理",
         "信息管理",

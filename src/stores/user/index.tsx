@@ -3,7 +3,7 @@ import {
   set_identity,
   set_access,
   set_img_path,
-  set_show_menu,
+  login_out,
   actionParamType,
 } from "./action";
 
@@ -36,6 +36,8 @@ export default function user(state = initUser, action: action) {
       return { ...state, access: action.param };
     case set_img_path:
       return { ...state, imgPath: action.param };
+    case login_out:
+      return { ...state, ...initUser };
     default:
       return state;
   }

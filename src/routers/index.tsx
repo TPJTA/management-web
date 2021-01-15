@@ -85,19 +85,20 @@ const Router: React.FC<storeType> = (props: storeType) => {
     let token_key = getCookie("TOKEN_KEY");
     if (token_key) {
       setIsLogin(true);
-      //模拟已登录时获得信息
-      setTimeout(() => {
-        props.setName("1111");
-        props.setIdentity("enterprise");
-        props.setImgPath("@/assets/images/head.jpg");
-        props.setAccess([
-          "商品管理",
-          "信息管理",
-          "数据分析",
-          "用户设置",
-          "权限设置",
-        ]);
-      }, 500);
+      if (!props.user.name) {
+        //模拟已登录时获得信息
+        setTimeout(() => {
+          props.setName("1111");
+          props.setIdentity("enterprise");
+          props.setAccess([
+            "商品管理",
+            "信息管理",
+            "数据分析",
+            "用户设置",
+            "权限设置",
+          ]);
+        }, 500);
+      }
     } else {
       setIsLogin(false);
     }

@@ -1,5 +1,11 @@
 import React, { lazy, LazyExoticComponent } from "react";
 import { hasOneOf } from "@/libs/tool";
+import {
+  HomeOutlined,
+  FormOutlined,
+  BarChartOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 export interface routeItem {
   name: string;
   show: boolean;
@@ -55,12 +61,14 @@ export const routers = (
         path: "/",
         show: true,
         exact: true,
+        icon: HomeOutlined,
         component: lazy(() => import("@/pages/main")),
       },
       {
         name: "管理页面",
         path: "/manage",
         show: hasOneOf(["商品管理", "信息管理"], access),
+        icon: FormOutlined,
         exact: false,
         children: [
           {
@@ -99,12 +107,14 @@ export const routers = (
         exact: true,
         show: access.includes("数据分析"),
         path: "/analysis",
+        icon: BarChartOutlined,
         component: lazy(() => import("@/pages/analysis")),
       },
       {
         name: "系统设置",
         path: "/setting",
         show: hasOneOf(["用户设置", "权限设置"], access),
+        icon: SettingOutlined,
         exact: false,
         children: [
           {
