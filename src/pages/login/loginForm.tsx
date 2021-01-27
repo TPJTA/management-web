@@ -91,7 +91,10 @@ const LoginForm: React.FC<propsType> = function (props: propsType) {
       </div>
       <Form.Item
         name="username"
-        rules={[{ required: true, message: "用户名不能为空" }]}
+        rules={[
+          { required: true, message: "用户名不能为空" },
+          { min: 4, message: "用户名不能小于4位" },
+        ]}
       >
         <Input
           size="large"
@@ -103,7 +106,7 @@ const LoginForm: React.FC<propsType> = function (props: propsType) {
         name="password"
         rules={[
           { required: true, message: "密码不能为空" },
-          { type: "string", min: 6, message: "密码不能小于6位" },
+          { min: 6, message: "密码不能小于6位" },
         ]}
       >
         <Input.Password

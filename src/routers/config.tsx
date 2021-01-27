@@ -94,12 +94,6 @@ export const routers = (
               ? "/manage/goods"
               : "/manage/basicMessage",
           },
-          {
-            name: "404跳转",
-            show: true,
-            exact: true,
-            redirect: "/404",
-          },
         ],
       },
       {
@@ -140,26 +134,8 @@ export const routers = (
               ? "/setting/user"
               : "/setting/access",
           },
-          {
-            name: "404跳转",
-            show: true,
-            exact: true,
-            redirect: "/404",
-          },
         ],
       },
-      {
-        name: "404跳转",
-        show: true,
-        exact: true,
-        redirect: "/404",
-      },
     ],
-  },
-  {
-    name: "404跳转",
-    show: true,
-    exact: true,
-    redirect: "/404",
   },
 ];

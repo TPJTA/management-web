@@ -47,7 +47,9 @@ const mapRouter = function (
                     item.component
                       ? React.createElement(
                           item.component,
-                          {},
+                          {
+                            navList: item.children,
+                          },
                           mapRouter(item.children, isLogin)
                         )
                       : mapRouter(item.children, isLogin)
@@ -74,6 +76,7 @@ const mapRouter = function (
               <Redirect from={item.path} to="/login" key={item.name} />
             )
           )}
+        <Redirect to="404" exact />
       </Switch>
     </Suspense>
   );
