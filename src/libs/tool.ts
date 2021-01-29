@@ -1,6 +1,8 @@
 import Cookie from "js-cookie";
+
 //Cookie默认存储时间
 const default_expires = 1;
+
 //设置cookie
 export const setCookie = function (
   name: string,
@@ -10,10 +12,12 @@ export const setCookie = function (
 ) {
   Cookie.set(name, value, { expires: expires, path: path });
 };
+
 //获得cookie
 export const getCookie = function (name: string) {
   return Cookie.get(name);
 };
+
 //删除cookie
 export const removeCookie = function (name: string, path = "/") {
   Cookie.remove(name, { path: path });
@@ -23,10 +27,24 @@ export const removeCookie = function (name: string, path = "/") {
 export const isSubset = function (targetarr: Array<any>, arr: Array<any>) {
   return targetarr.every((v) => arr.includes(v));
 };
+
 //判断要查询的数组是否至少有一个元素包含在目标数组中
 export const hasOneOf = (targetarr: Array<any>, arr: Array<any>) => {
   return targetarr.some((_) => arr.indexOf(_) > -1);
 };
+
+//数字使用,进行分割
+export const parseNumber = function (num: number): string {
+  let strArr = num.toString().split("").reverse();
+  let length = strArr.length;
+  for (let i = 1; i <= length; i++) {
+    if (i % 3 === 0 && i != length) {
+      strArr.splice(i + i / 3 - 1, 0, ",");
+    }
+  }
+  return strArr.reverse().join("");
+};
+
 //如果传入的数值小于10，即位数只有1位，则在前面补充0
 const getHandledValue = function (num: number): string {
   return num < 10 ? "0" + num : num.toString();

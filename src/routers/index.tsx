@@ -5,12 +5,7 @@ import { connect } from "react-redux";
 import { storeType } from "@/stores";
 import { getCookie } from "@/libs/tool";
 import { Dispatch } from "redux";
-import {
-  setName,
-  setIdentity,
-  setImgPath,
-  setAccess,
-} from "@/stores/user/action";
+import { setName, setIdentity, setImgPath, setAccess } from "@/stores/action";
 const stroeToProps = (store: storeType) => ({
   user: store.user,
 });

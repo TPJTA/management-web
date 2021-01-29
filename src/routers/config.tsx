@@ -1,4 +1,4 @@
-import React, { lazy, LazyExoticComponent } from "react";
+import React, { lazy } from "react";
 import { hasOneOf } from "@/libs/tool";
 import {
   HomeOutlined,

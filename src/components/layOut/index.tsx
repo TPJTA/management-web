@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { storeType } from "@/stores";
-import { loginOut } from "@/stores/user/action";
+import { loginOut } from "@/stores/action";
 import { Dispatch } from "redux";
 import { removeCookie } from "@/libs/tool";
 import { Layout, Avatar, Dropdown, Menu } from "antd";
@@ -16,7 +16,7 @@ import NavMenu from "./navMenu";
 import "./index.less";
 const { Header, Sider, Content } = Layout;
 
-const stroeToProps = (store: storeType) => ({
+const storeToProps = (store: storeType) => ({
   user: store.user,
 });
 const dispatchToProps = (dispatch: Dispatch) => ({
@@ -27,7 +27,22 @@ const dispatchToProps = (dispatch: Dispatch) => ({
 });
 const layOut: React.FC<any> = function (props) {
   const [collapsed, setCollapsed] = useState(false);
-
+  const getTitle = (path: string): string => {
+    const getItem = (arr: any): any => {
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].path === path) {
+          return arr[i].name;
+        } else if (arr[i].children) {
+          let name = getItem(arr[i].children);
+          if (name) {
+            return name;
+          }
+        }
+      }
+      return "";
+    };
+    return getItem(props.navList);
+  };
   const userMenu = (
     <Menu>
       <Menu.Item
@@ -66,7 +81,9 @@ const layOut: React.FC<any> = function (props) {
               },
             }
           )}
-          <div className="header-title">xxxx管理系统</div>
+          <div className="header-title">
+            {getTitle(props.location.pathname)}
+          </div>
           <Dropdown overlay={userMenu}>
             <div className="header-user">
               <Avatar
@@ -85,4 +102,4 @@ const layOut: React.FC<any> = function (props) {
   );
 };
 
-export default connect(stroeToProps, dispatchToProps)(withRouter(layOut));
+export default connect(storeToProps, dispatchToProps)(withRouter(layOut));

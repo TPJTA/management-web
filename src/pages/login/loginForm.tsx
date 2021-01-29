@@ -4,12 +4,7 @@ import { Form, Input, Button, Select, Checkbox } from "antd";
 import { UserOutlined, LockOutlined, TeamOutlined } from "@ant-design/icons";
 import { storeType } from "@/stores";
 import { Dispatch } from "redux";
-import {
-  setName,
-  setIdentity,
-  setImgPath,
-  setAccess,
-} from "@/stores/user/action";
+import { setName, setIdentity, setImgPath, setAccess } from "@/stores/action";
 import { setCookie, removeCookie, getCookie } from "@/libs/tool";
 const storeToProps = (store: storeType) => ({
   userInformation: store.user,
