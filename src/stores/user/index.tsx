@@ -5,24 +5,24 @@ import {
   set_img_path,
   login_out,
   actionParamType,
+  accessTy,
 } from "./action";
 
 interface action {
   type: string;
   param: actionParamType;
 }
-
 export interface userInter {
   name: string;
   identity: string;
-  access: string[];
+  access: Array<accessTy>;
   imgPath: string;
 }
 
 const initUser: userInter = {
   name: "",
   identity: "",
-  access: ["商品管理", "信息管理", "数据分析", "用户设置", "权限设置"],
+  access: [],
   imgPath: "",
 };
 

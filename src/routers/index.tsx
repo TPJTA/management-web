@@ -5,7 +5,13 @@ import { connect } from "react-redux";
 import { storeType } from "@/stores";
 import { getCookie } from "@/libs/tool";
 import { Dispatch } from "redux";
-import { setName, setIdentity, setImgPath, setAccess } from "@/stores/action";
+import {
+  setName,
+  setIdentity,
+  setImgPath,
+  setAccess,
+  accessTy,
+} from "@/stores/user/action";
 const stroeToProps = (store: storeType) => ({
   user: store.user,
 });
@@ -19,7 +25,7 @@ const dispatchToProps = (dispatch: Dispatch) => ({
   setImgPath: (img: string) => {
     dispatch(setImgPath(img));
   },
-  setAccess: (access: string[]) => {
+  setAccess: (access: Array<accessTy>) => {
     dispatch(setAccess(access));
   },
 });
@@ -90,7 +96,7 @@ const Router: React.FC<storeType> = (props: storeType) => {
           props.setIdentity("enterprise");
           props.setAccess([
             "商品管理",
-            "信息管理",
+            "订单管理",
             "数据分析",
             "用户设置",
             "权限设置",

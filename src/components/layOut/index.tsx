@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { storeType } from "@/stores";
-import { loginOut } from "@/stores/action";
+import { loginOut } from "@/stores/user/action";
 import { Dispatch } from "redux";
 import { removeCookie } from "@/libs/tool";
 import { Layout, Avatar, Dropdown, Menu } from "antd";
@@ -94,7 +94,7 @@ const layOut: React.FC<any> = function (props) {
             </div>
           </Dropdown>
         </Header>
-        <Content style={{ paddingLeft: "20px", paddingTop: "20px" }}>
+        <Content style={{ padding: "20px 20px 0" }}>
           <div className="router-content">{props.children}</div>
         </Content>
       </Layout>

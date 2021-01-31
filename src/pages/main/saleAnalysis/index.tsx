@@ -8,14 +8,15 @@ const saleAnalysis: React.FC<any> = function () {
     let dom = chart.current;
     if (dom) {
       let myChart = echarts.init(dom);
-      EleResize.on(dom, () => {
+      EleResize.on(chart.current, () => {
         myChart.resize();
       });
       let option = {
         grid: {
           left: "0",
           right: "20px",
-          bottom: "30px",
+          top: "10%",
+          bottom: "5%",
           containLabel: true,
         },
         tooltip: {
@@ -79,6 +80,13 @@ const saleAnalysis: React.FC<any> = function () {
   useEffect(() => {
     initChart();
   }, []);
+  // useEffect(() => {
+  //   console.log(2);
+
+  //   EleResize.on(chart.current, () => {
+  //     myChart.resize();
+  //   });
+  // }, [myChart]);
   return (
     <div className="sale-analysis">
       <div className="sale-analysis-title">销量分析</div>

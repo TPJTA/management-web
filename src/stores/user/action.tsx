@@ -1,3 +1,4 @@
+import { accessTy as a } from "@/routers/config";
 export const set_name = "set_name";
 export const set_identity = "set_identity";
 export const set_access = "set_access";
@@ -6,8 +7,8 @@ export const login_out = "login_out";
 interface actionFn<T = any> {
   (param: T): { type: string; param?: T };
 }
-export type actionParamType = string | string[] | boolean | undefined;
-
+export type accessTy = a;
+export type actionParamType = string | Array<accessTy> | boolean | undefined;
 export const setName: actionFn<string> = function (param) {
   return {
     param,
@@ -22,7 +23,7 @@ export const setIdentity: actionFn<string> = function (param) {
   };
 };
 
-export const setAccess: actionFn<string[]> = function (param) {
+export const setAccess: actionFn<Array<accessTy>> = function (param) {
   return {
     param,
     type: set_access,

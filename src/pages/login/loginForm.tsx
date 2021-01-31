@@ -4,7 +4,13 @@ import { Form, Input, Button, Select, Checkbox } from "antd";
 import { UserOutlined, LockOutlined, TeamOutlined } from "@ant-design/icons";
 import { storeType } from "@/stores";
 import { Dispatch } from "redux";
-import { setName, setIdentity, setImgPath, setAccess } from "@/stores/action";
+import {
+  setName,
+  setIdentity,
+  setImgPath,
+  setAccess,
+  accessTy,
+} from "@/stores/user/action";
 import { setCookie, removeCookie, getCookie } from "@/libs/tool";
 const storeToProps = (store: storeType) => ({
   userInformation: store.user,
@@ -19,7 +25,7 @@ const dispatchToProps = (dispatch: Dispatch) => ({
   setImgPath: (img: string) => {
     dispatch(setImgPath(img));
   },
-  setAccess: (access: string[]) => {
+  setAccess: (access: Array<accessTy>) => {
     dispatch(setAccess(access));
   },
 });
@@ -27,7 +33,7 @@ interface propsType {
   setName: (name: string) => void;
   setIdentity: (identity: string) => void;
   setImgPath: (img: string) => void;
-  setAccess: (access: string[]) => void;
+  setAccess: (access: Array<accessTy>) => void;
   userInformation: object;
   changePage: (path: string) => void;
 }
@@ -57,7 +63,7 @@ const LoginForm: React.FC<propsType> = function (props: propsType) {
       props.setIdentity(value.identity);
       props.setAccess([
         "商品管理",
-        "信息管理",
+        "订单管理",
         "数据分析",
         "用户设置",
         "权限设置",

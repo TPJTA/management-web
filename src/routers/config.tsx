@@ -16,10 +16,16 @@ export interface routeItem {
   icon?: React.ComponentClass | React.FC;
   children?: routeItem[];
 }
+export type accessTy =
+  | "商品管理"
+  | "订单管理"
+  | "数据分析"
+  | "用户设置"
+  | "权限设置";
 
 export const routers = (
   isLogin: boolean,
-  access: string[] = []
+  access: Array<accessTy> = []
 ): routeItem[] => [
   {
     name: "登录",
@@ -79,9 +85,9 @@ export const routers = (
             component: lazy(() => import("@/pages/manage/goods")),
           },
           {
-            name: "信息管理",
+            name: "订单管理",
             path: "/manage/basicMessage",
-            show: access.includes("信息管理"),
+            show: access.includes("订单管理"),
             exact: true,
             component: lazy(() => import("@/pages/manage/basicMessage")),
           },
