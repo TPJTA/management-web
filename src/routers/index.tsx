@@ -77,7 +77,7 @@ const mapRouter = function (
               <Redirect from={item.path} to="/login" key={item.name} />
             )
           )}
-        <Redirect to="404" exact />
+        <Redirect to="/404" exact />
       </Switch>
     </Suspense>
   );
@@ -94,13 +94,7 @@ const Router: React.FC<storeType> = (props: storeType) => {
         setTimeout(() => {
           props.setName("1111");
           props.setIdentity("enterprise");
-          props.setAccess([
-            "商品管理",
-            "订单管理",
-            "数据分析",
-            "用户设置",
-            "权限设置",
-          ]);
+          props.setAccess(["商品管理", "订单管理", "数据分析", "权限设置"]);
         }, 500);
       }
     } else {

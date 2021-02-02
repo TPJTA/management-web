@@ -22,7 +22,7 @@ export interface userInter {
 const initUser: userInter = {
   name: "",
   identity: "",
-  access: [],
+  access: ["商品管理", "订单管理", "数据分析", "权限设置"],
   imgPath: "",
 };
 

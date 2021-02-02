@@ -16,12 +16,7 @@ export interface routeItem {
   icon?: React.ComponentClass | React.FC;
   children?: routeItem[];
 }
-export type accessTy =
-  | "商品管理"
-  | "订单管理"
-  | "数据分析"
-  | "用户设置"
-  | "权限设置";
+export type accessTy = "商品管理" | "订单管理" | "数据分析" | "权限设置";
 
 export const routers = (
   isLogin: boolean,
@@ -71,7 +66,7 @@ export const routers = (
         component: lazy(() => import("@/pages/main")),
       },
       {
-        name: "管理页面",
+        name: "管理中心",
         path: "/manage",
         show: hasOneOf(["商品管理", "信息管理"], access),
         icon: FormOutlined,
@@ -86,10 +81,17 @@ export const routers = (
           },
           {
             name: "订单管理",
-            path: "/manage/basicMessage",
+            path: "/manage/order",
             show: access.includes("订单管理"),
             exact: true,
-            component: lazy(() => import("@/pages/manage/basicMessage")),
+            component: lazy(() => import("@/pages/manage/order")),
+          },
+          {
+            name: "订单详细",
+            path: "/manage/order/:id",
+            show: access.includes("订单管理"),
+            exact: true,
+            component: lazy(() => import("@/pages/manage/order/orderDetails")),
           },
           {
             name: "管理页跳转",
@@ -98,7 +100,7 @@ export const routers = (
             exact: true,
             redirect: access.includes("商品管理")
               ? "/manage/goods"
-              : "/manage/basicMessage",
+              : "/manage/order",
           },
         ],
       },
@@ -111,36 +113,12 @@ export const routers = (
         component: lazy(() => import("@/pages/analysis")),
       },
       {
-        name: "系统设置",
+        name: "权限设置",
         path: "/setting",
-        show: hasOneOf(["用户设置", "权限设置"], access),
+        show: hasOneOf(["权限设置"], access),
         icon: SettingOutlined,
-        exact: false,
-        children: [
-          {
-            name: "用户设置",
-            path: "/setting/user",
-            show: access.includes("用户设置"),
-            exact: true,
-            component: lazy(() => import("@/pages/setting/userSetting")),
-          },
-          {
-            name: "权限设置",
-            path: "/setting/access",
-            show: access.includes("权限设置"),
-            exact: true,
-            component: lazy(() => import("@/pages/setting/accessSetting")),
-          },
-          {
-            name: "系统设置跳转",
-            path: "/setting",
-            exact: true,
-            show: true,
-            redirect: access.includes("用户设置")
-              ? "/setting/user"
-              : "/setting/access",
-          },
-        ],
+        exact: true,
+        component: lazy(() => import("@/pages/setting")),
       },
     ],
   },

@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Input, Select, Form, Button, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import GoodsTable, { data } from "./goodsTable";
+import GoodsTable, { goodsData } from "./goodsTable";
+import GoodsEdit from "./goodsEdit";
 import testImg from "@/assets/images/goods.jpg";
 import "./index.less";
 const { Search } = Input;
 const { Option } = Select;
-const initdataSource: data[] = [];
+interface pageData {
+  current: number;
+  total: number;
+  pageSize: number;
+}
 const Goods: React.FC = function () {
   const [isLoading, setIsLoading] = useState(false);
-  const [dataSource, setDataSource] = useState(initdataSource);
-  const [pageData, setPageData] = useState({
-    current: 1,
-    total: 1,
-    pageSize: 8,
-  });
+  const [viewGoods, setViewGoods] = useState<goodsData>();
+  const [isEdit, setIsEdit] = useState(false);
+  const [dataSource, setDataSource] = useState<goodsData[]>([]);
+  const [pageData, setPageData] = useState<pageData>();
   const onSearch = (val: any) => {
     message.info(JSON.stringify(val));
     setIsLoading(true);
@@ -23,7 +26,7 @@ const Goods: React.FC = function () {
         {
           id: 1,
           key: "1",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -35,7 +38,7 @@ const Goods: React.FC = function () {
         {
           id: 2,
           key: "2",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -47,7 +50,7 @@ const Goods: React.FC = function () {
         {
           id: 3,
           key: "3",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -68,7 +71,7 @@ const Goods: React.FC = function () {
         {
           id: 1,
           key: "1",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -80,7 +83,7 @@ const Goods: React.FC = function () {
         {
           id: 2,
           key: "2",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -92,7 +95,7 @@ const Goods: React.FC = function () {
         {
           id: 3,
           key: "3",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -104,7 +107,7 @@ const Goods: React.FC = function () {
         {
           id: 4,
           key: "4",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -116,7 +119,7 @@ const Goods: React.FC = function () {
         {
           id: 5,
           key: "5",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -128,7 +131,7 @@ const Goods: React.FC = function () {
         {
           id: 6,
           key: "6",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -140,7 +143,7 @@ const Goods: React.FC = function () {
         {
           id: 7,
           key: "7",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -152,7 +155,7 @@ const Goods: React.FC = function () {
         {
           id: 8,
           key: "8",
-          img: testImg,
+          img: [testImg],
           title: "手表",
           commonPrice: 80,
           memberPrice: 60,
@@ -165,44 +168,75 @@ const Goods: React.FC = function () {
       setIsLoading(false);
     }, 300);
   };
+  const deletGoods = (id: number) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setDataSource(dataSource.filter((item) => item.id != id));
+    }, 300);
+  };
+  const view = (goods: goodsData, isEdit: boolean) => {
+    setViewGoods(goods);
+    setIsEdit(isEdit);
+  };
+  //因为刷新时会渲染两次(需要重新获取用户权限并渲染路由),为了防止内存泄漏(第一个组件已经删除但因为获取到数据导致修改stat),所以延迟获取数据
   useEffect(() => {
-    getGoods();
+    setIsLoading(true);
+    let timer = setTimeout(() => {
+      getGoods();
+    }, 200);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
   return (
     <div className="goods">
-      <Form onFinish={onSearch} layout="inline">
-        <Form.Item>
-          <Input.Group compact>
-            <Form.Item name="type">
-              <Select placeholder="请选择类型" style={{ width: "120px" }}>
-                <Option value="clothing">服装</Option>
-                <Option value="jewelry">饰品</Option>
-                <Option value="food">食品</Option>
-                <Option value="cosmetics">化妆品</Option>
-              </Select>
+      {Boolean(viewGoods) ? (
+        <GoodsEdit
+          goods={viewGoods}
+          isEdit={isEdit}
+          setEdit={setIsEdit}
+          setView={setViewGoods}
+        />
+      ) : (
+        <div>
+          <Form onFinish={onSearch} layout="inline">
+            <Form.Item>
+              <Input.Group compact>
+                <Form.Item name="type">
+                  <Select placeholder="请选择类型" style={{ width: "120px" }}>
+                    <Option value="clothing">服装</Option>
+                    <Option value="jewelry">饰品</Option>
+                    <Option value="food">食品</Option>
+                    <Option value="cosmetics">化妆品</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item name="name">
+                  <Search
+                    placeholder="请输入产品名称"
+                    allowClear
+                    enterButton={
+                      <Button
+                        type="primary"
+                        icon={<SearchOutlined />}
+                        htmlType="submit"
+                      ></Button>
+                    }
+                  />
+                </Form.Item>
+              </Input.Group>
             </Form.Item>
-            <Form.Item name="name">
-              <Search
-                placeholder="请输入产品名称"
-                allowClear
-                enterButton={
-                  <Button
-                    type="primary"
-                    icon={<SearchOutlined />}
-                    htmlType="submit"
-                  ></Button>
-                }
-              />
-            </Form.Item>
-          </Input.Group>
-        </Form.Item>
-      </Form>
-      <GoodsTable
-        isLoading={isLoading}
-        dataSource={dataSource}
-        pageData={pageData}
-        pageChange={getGoods}
-      />
+          </Form>
+          <GoodsTable
+            isLoading={isLoading}
+            dataSource={dataSource}
+            pageData={pageData}
+            pageChange={getGoods}
+            deletGoods={deletGoods}
+            setView={view}
+          />
+        </div>
+      )}
     </div>
   );
 };

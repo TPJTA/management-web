@@ -15,7 +15,6 @@ import {
 import NavMenu from "./navMenu";
 import "./index.less";
 const { Header, Sider, Content } = Layout;
-
 const storeToProps = (store: storeType) => ({
   user: store.user,
 });
@@ -32,6 +31,11 @@ const layOut: React.FC<any> = function (props) {
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].path === path) {
           return arr[i].name;
+        } else if (
+          arr[i].path.indexOf(":") != -1 &&
+          new RegExp(`^${arr[i].path.split(":")[0]}`).test(path)
+        ) {
+          return arr[i].name;
         } else if (arr[i].children) {
           let name = getItem(arr[i].children);
           if (name) {
@@ -45,14 +49,6 @@ const layOut: React.FC<any> = function (props) {
   };
   const userMenu = (
     <Menu>
-      <Menu.Item
-        icon={<UserOutlined />}
-        onClick={() => {
-          props.history.push("/setting/user");
-        }}
-      >
-        <span>用户设置</span>
-      </Menu.Item>
       <Menu.Item
         icon={<CloseSquareOutlined />}
         onClick={() => {

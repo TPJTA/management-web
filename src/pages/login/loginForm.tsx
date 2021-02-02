@@ -61,13 +61,7 @@ const LoginForm: React.FC<propsType> = function (props: propsType) {
       }
       props.setName(value.username);
       props.setIdentity(value.identity);
-      props.setAccess([
-        "商品管理",
-        "订单管理",
-        "数据分析",
-        "用户设置",
-        "权限设置",
-      ]);
+      props.setAccess(["商品管理", "订单管理", "数据分析", "权限设置"]);
       props.changePage("/");
     }, 1000);
   };

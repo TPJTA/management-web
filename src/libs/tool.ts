@@ -32,8 +32,11 @@ export const isSubset = function (targetarr: Array<any>, arr: Array<any>) {
 export const hasOneOf = (targetarr: Array<any>, arr: Array<any>) => {
   return targetarr.some((_) => arr.indexOf(_) > -1);
 };
-
-//数字使用,进行分割
+//如果传入的数值小于10，即位数只有1位，则在前面补充0
+const getHandledValue = function (num: number): string {
+  return num < 10 ? "0" + num : num.toString();
+};
+//数字使用,进行分割(只能用于整数分割)
 export const parseNumber = function (num: number): string {
   let strArr = num.toString().split("").reverse();
   let length = strArr.length;
@@ -44,10 +47,13 @@ export const parseNumber = function (num: number): string {
   }
   return strArr.reverse().join("");
 };
-
-//如果传入的数值小于10，即位数只有1位，则在前面补充0
-const getHandledValue = function (num: number): string {
-  return num < 10 ? "0" + num : num.toString();
+//为数组添加十分位和百分位，并进行大小分割(一般用于钱)
+export const formatMoney = function (num: number): string {
+  let integer = Math.floor(num);
+  let decimal = (num - integer) * 100;
+  let integerStr = parseNumber(integer);
+  let decimalStr = getHandledValue(decimal);
+  return integerStr + "." + decimalStr;
 };
 //格式化时间
 export const formatTime = function (

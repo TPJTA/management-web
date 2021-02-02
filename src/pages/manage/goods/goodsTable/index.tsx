@@ -1,10 +1,11 @@
 import React, { FC } from "react";
 import { Table, Button, Space } from "antd";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
-export interface data {
+import { formatMoney } from "@/libs/tool";
+export interface goodsData {
   id: number;
   key: any;
-  img: string;
+  img: string[];
   title: string;
   commonPrice: number;
   memberPrice: number;
@@ -19,13 +20,16 @@ export interface pageData {
   pageSize: number;
 }
 interface props {
-  dataSource: data[];
-  pageData: pageData;
+  dataSource: goodsData[];
+  pageData?: pageData;
   isLoading: boolean;
-  pageChange: (page: number, pageSize?: number) => void;
+  pageChange?: (page: number, pageSize?: number) => void;
+  deletGoods: (id: number) => void;
+  setView: (goods: goodsData, isEdit: boolean) => void;
 }
 const center: "center" = "center";
 const goodsTable: FC<props> = function (props) {
+  const deletGoods = props.deletGoods;
   const columns = [
     {
       title: "产品图片",
@@ -45,7 +49,7 @@ const goodsTable: FC<props> = function (props) {
       dataIndex: "commonPrice",
       align: center,
       render(text: number) {
-        return <span>￥ {text}</span>;
+        return <span>￥ {formatMoney(text)}</span>;
       },
     },
     {
@@ -53,7 +57,7 @@ const goodsTable: FC<props> = function (props) {
       dataIndex: "memberPrice",
       align: center,
       render(text: number) {
-        return <span>￥ {text}</span>;
+        return <span>￥ {formatMoney(text)}</span>;
       },
     },
     {
@@ -131,13 +135,32 @@ const goodsTable: FC<props> = function (props) {
       render(text: any, record: any, index: number) {
         return (
           <Space>
-            <Button type="primary" size="small">
+            <Button
+              type="primary"
+              size="small"
+              onClick={() => {
+                setView(record, false);
+              }}
+            >
               查看
             </Button>
-            <Button type="primary" size="small">
+            <Button
+              type="primary"
+              size="small"
+              onClick={() => {
+                setView(record, true);
+              }}
+            >
               编辑
             </Button>
-            <Button type="primary" danger size="small">
+            <Button
+              type="primary"
+              danger
+              size="small"
+              onClick={() => {
+                deletGoods(record.id);
+              }}
+            >
               删除
             </Button>
           </Space>
@@ -145,13 +168,18 @@ const goodsTable: FC<props> = function (props) {
       },
     },
   ];
+  const setView = (goods: goodsData, isEdit: boolean) => {
+    props.setView(goods, isEdit);
+  };
   return (
     <div>
       <Table
         dataSource={props.dataSource}
         columns={columns}
         loading={props.isLoading}
-        pagination={{ ...props.pageData, onChange: props.pageChange }}
+        pagination={
+          props.pageData && { ...props.pageData, onChange: props.pageChange }
+        }
       />
       ;
     </div>

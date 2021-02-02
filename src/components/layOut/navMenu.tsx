@@ -37,7 +37,8 @@ const navMenu: React.FC<any> = function (props) {
                 {item.children.map(
                   (routerItem: routeItem) =>
                     routerItem.show &&
-                    !routerItem.redirect && (
+                    !routerItem.redirect &&
+                    !/:/.test(String(routerItem.path)) && (
                       <Menu.Item
                         key={routerItem.path}
                         icon={
