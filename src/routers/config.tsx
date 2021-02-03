@@ -68,7 +68,7 @@ export const routers = (
       {
         name: "管理中心",
         path: "/manage",
-        show: hasOneOf(["商品管理", "信息管理"], access),
+        show: hasOneOf(["商品管理", "订单管理"], access),
         icon: FormOutlined,
         exact: false,
         children: [

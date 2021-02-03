@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { storeType } from "@/stores";
 import { loginOut } from "@/stores/user/action";
 import { Dispatch } from "redux";
 import { removeCookie } from "@/libs/tool";
-import { Layout, Avatar, Dropdown, Menu } from "antd";
+import { Layout, Avatar, Dropdown, Menu, Affix } from "antd";
 import { withRouter } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
@@ -62,8 +62,11 @@ const layOut: React.FC<any> = function (props) {
   return (
     <Layout style={{ minHeight: "100%" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <NavMenu navList={props.navList} history={props.history} />
+        <Affix>
+          <NavMenu navList={props.navList} history={props.history} />
+        </Affix>
       </Sider>
+
       <Layout>
         <Header
           style={{ paddingLeft: "20px" }}

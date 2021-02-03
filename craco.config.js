@@ -5,6 +5,9 @@ module.exports = {
     alias: {
       "@": path.resolve("src"),
     },
+    resolve: {
+      extensions: [".ts", ".tsx", ".js"],
+    },
   },
   plugins: [
     {

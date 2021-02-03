@@ -7,8 +7,13 @@ export const login_out = "login_out";
 interface actionFn<T = any> {
   (param: T): { type: string; param?: T };
 }
+//为了能再次导出
 export type accessTy = a;
-export type actionParamType = string | Array<accessTy> | boolean | undefined;
+export interface accessAction {
+  access: Array<accessTy>;
+  type?: string;
+}
+export type actionParamType = string | accessAction | boolean | undefined;
 export const setName: actionFn<string> = function (param) {
   return {
     param,
@@ -23,7 +28,7 @@ export const setIdentity: actionFn<string> = function (param) {
   };
 };
 
-export const setAccess: actionFn<Array<accessTy>> = function (param) {
+export const setAccess: actionFn<accessAction> = function (param) {
   return {
     param,
     type: set_access,

@@ -9,7 +9,7 @@ import {
   setIdentity,
   setImgPath,
   setAccess,
-  accessTy,
+  accessAction,
 } from "@/stores/user/action";
 import { setCookie, removeCookie, getCookie } from "@/libs/tool";
 const storeToProps = (store: storeType) => ({
@@ -25,7 +25,7 @@ const dispatchToProps = (dispatch: Dispatch) => ({
   setImgPath: (img: string) => {
     dispatch(setImgPath(img));
   },
-  setAccess: (access: Array<accessTy>) => {
+  setAccess: (access: accessAction) => {
     dispatch(setAccess(access));
   },
 });
@@ -33,8 +33,8 @@ interface propsType {
   setName: (name: string) => void;
   setIdentity: (identity: string) => void;
   setImgPath: (img: string) => void;
-  setAccess: (access: Array<accessTy>) => void;
-  userInformation: object;
+  setAccess: (access: accessAction) => void;
+  userInformation: storeType["user"];
   changePage: (path: string) => void;
 }
 
@@ -43,9 +43,8 @@ const LoginForm: React.FC<propsType> = function (props: propsType) {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    let str = getCookie("user");
-    if (str) {
-      form.setFieldsValue(JSON.parse(str));
+    if (getCookie("user")) {
+      form.setFieldsValue(JSON.parse(getCookie("user") as string));
     }
   }, []);
 
@@ -61,7 +60,11 @@ const LoginForm: React.FC<propsType> = function (props: propsType) {
       }
       props.setName(value.username);
       props.setIdentity(value.identity);
-      props.setAccess(["商品管理", "订单管理", "数据分析", "权限设置"]);
+      console.log(props.userInformation.access);
+
+      props.setAccess({
+        access: props.userInformation.access[value.identity],
+      });
       props.changePage("/");
     }, 1000);
   };

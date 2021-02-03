@@ -10,7 +10,7 @@ import {
   setIdentity,
   setImgPath,
   setAccess,
-  accessTy,
+  accessAction,
 } from "@/stores/user/action";
 const stroeToProps = (store: storeType) => ({
   user: store.user,
@@ -25,7 +25,7 @@ const dispatchToProps = (dispatch: Dispatch) => ({
   setImgPath: (img: string) => {
     dispatch(setImgPath(img));
   },
-  setAccess: (access: Array<accessTy>) => {
+  setAccess: (access: accessAction) => {
     dispatch(setAccess(access));
   },
 });
@@ -93,8 +93,10 @@ const Router: React.FC<storeType> = (props: storeType) => {
         //模拟已登录时获得信息
         setTimeout(() => {
           props.setName("1111");
-          props.setIdentity("enterprise");
-          props.setAccess(["商品管理", "订单管理", "数据分析", "权限设置"]);
+          props.setIdentity("administrators");
+          props.setAccess({
+            access: ["商品管理", "订单管理", "数据分析", "权限设置"],
+          });
         }, 500);
       }
     } else {
@@ -103,7 +105,10 @@ const Router: React.FC<storeType> = (props: storeType) => {
   }, [getCookie("TOKEN_KEY")]);
   return (
     <HashRouter>
-      {mapRouter(routers(isLogin, props.user.access), isLogin)}
+      {mapRouter(
+        routers(isLogin, props.user.access[props.user.identity]),
+        isLogin
+      )}
     </HashRouter>
   );
 };
