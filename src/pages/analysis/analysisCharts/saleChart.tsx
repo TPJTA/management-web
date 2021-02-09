@@ -1,30 +1,38 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import AnalysisBox from "../analysisBox";
 import * as echarts from "echarts";
-import "./index.less";
-import { EleResize } from "@/libs/resize";
-const saleAnalysis: React.FC<any> = function () {
+interface onSize {
+  fn: () => void;
+}
+const saleChart = function () {
   const [myChart, setMyChart] = useState<echarts.ECharts>();
   const chart = useRef(null);
   const initChart = () => {
     if (chart.current) {
       let myChart = echarts.init(chart.current as any);
       setMyChart(myChart);
-      EleResize.on(chart.current, () => {
-        myChart.resize();
-      });
       let option = {
+        title: {
+          text: "每月销量",
+          textStyle: {
+            color: "#fff",
+          },
+          top: "1%",
+          left: "center",
+        },
         grid: {
-          left: "0",
-          right: "20px",
-          top: "10%",
-          bottom: "5%",
+          left: "2%",
+          right: "5%",
+          top: "12%",
+          bottom: "2%",
           containLabel: true,
         },
         tooltip: {
           trigger: "axis",
-          axisPointer: {
-            type: "shadow",
-            shadowStyle: { color: "rgba(0,0,0,0.3)" },
+          backgroundColor: "rgba(0,0,0,0.5)",
+          borderWidth: 0,
+          textStyle: {
+            color: "#fff",
           },
         },
         xAxis: {
@@ -42,12 +50,24 @@ const saleAnalysis: React.FC<any> = function () {
             "十一月",
             "十二月",
           ],
+          axisTick: {
+            alignWithLabel: true,
+            interval: 0,
+          },
+          axisLabel: {
+            interval: 0,
+            color: "#fff",
+          },
         },
-        yAxis: {},
+        yAxis: {
+          axisLabel: {
+            color: "#fff",
+          },
+        },
         series: [
           {
             name: "销量",
-            type: "bar",
+            type: "line",
             data: [
               500,
               203,
@@ -69,8 +89,11 @@ const saleAnalysis: React.FC<any> = function () {
         ],
         media: [
           {
+            query: {
+              maxHeight: 400,
+            },
             option: {
-              series: [{ barCategoryGap: "50%" }],
+              xAxis: { axisLabel: { fontSize: 8 } },
             },
           },
         ],
@@ -79,9 +102,7 @@ const saleAnalysis: React.FC<any> = function () {
     }
   };
   useEffect(() => {
-    setTimeout(() => {
-      initChart();
-    }, 100);
+    initChart();
   }, []);
   useEffect(() => {
     return () => {
@@ -91,10 +112,12 @@ const saleAnalysis: React.FC<any> = function () {
     };
   });
   return (
-    <div className="sale-analysis">
-      <div className="sale-analysis-title">销量分析</div>
-      <div className="sale-analysis-chart" ref={chart}></div>
-    </div>
+    <AnalysisBox
+      onSize={myChart && myChart.resize}
+      className="analysis-item-chart"
+    >
+      <div ref={chart} style={{ height: "100%", width: "100%" }}></div>
+    </AnalysisBox>
   );
 };
-export default saleAnalysis;
+export default saleChart;
