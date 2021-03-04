@@ -6,19 +6,29 @@ import {
   BarChartOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-export interface routeItem {
-  name: string;
-  show: boolean;
+
+//普通路由
+interface router {
+  name: string; //名称
+  show: boolean; //是否显示，如果为false则渲染为重定向403
   exact: boolean;
-  path?: string;
+  path: string;
   component?: React.FC<any> | React.ComponentClass<any, any>;
-  redirect?: string;
-  icon?: React.ComponentClass | React.FC;
+  icon?: React.ComponentClass | React.FC; //一般是导航的图标
   children?: routeItem[];
 }
+//重定向
+interface redirect {
+  name: string; //名称
+  show: boolean; //是否显示，如果为false则渲染为重定向403
+  exact: boolean;
+  path: string;
+  redirect: string; //重定向的地址
+}
+export type routeItem = router | redirect;
 export type accessTy = "商品管理" | "订单管理" | "数据分析" | "权限设置";
 
-export const routers = (
+export const route = (
   isLogin: boolean,
   access: Array<accessTy> = []
 ): routeItem[] => [

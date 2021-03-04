@@ -65,7 +65,7 @@ const ageChart = function () {
         media: [
           {
             query: {
-              maxHeight: 400,
+              maxWidth: 500,
             },
             option: {
               grid: {

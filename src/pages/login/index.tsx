@@ -9,7 +9,7 @@ const Login: React.FC<RouterProps> = function (props: RouterProps) {
 
   return (
     <div className="login">
-      <h1>xxxx管理中心</h1>
+      <h1>智慧商城管理中心</h1>
       <div className="login-form">
         <LoginForm changePage={changePage} />
       </div>

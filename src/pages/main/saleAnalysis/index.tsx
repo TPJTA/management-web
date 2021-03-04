@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import * as echarts from "echarts";
 import "./index.less";
 import { EleResize } from "@/libs/resize";
-const saleAnalysis: React.FC<any> = function () {
+const saleAnalysis: React.FC = function () {
   const [myChart, setMyChart] = useState<echarts.ECharts>();
   const chart = useRef(null);
   const initChart = () => {

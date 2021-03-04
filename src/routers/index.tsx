@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Switch, Route, Redirect, HashRouter } from "react-router-dom";
-import { routeItem, routers } from "./config";
+import { routeItem, route } from "./config";
 import { connect } from "react-redux";
 import { storeType } from "@/stores";
 import { getCookie } from "@/libs/tool";
@@ -39,7 +39,7 @@ const mapRouter = function (
         {router &&
           router.map((item) =>
             item.show ? (
-              item.children ? (
+              "children" in item ? (
                 <Route
                   path={item.path}
                   key={item.name}
@@ -56,7 +56,7 @@ const mapRouter = function (
                       : mapRouter(item.children, isLogin)
                   }
                 />
-              ) : item.redirect ? (
+              ) : "redirect" in item ? (
                 <Redirect
                   from={item.path}
                   to={item.redirect}
@@ -106,7 +106,7 @@ const Router: React.FC<storeType> = (props: storeType) => {
   return (
     <HashRouter>
       {mapRouter(
-        routers(isLogin, props.user.access[props.user.identity]),
+        route(isLogin, props.user.access[props.user.identity]),
         isLogin
       )}
     </HashRouter>

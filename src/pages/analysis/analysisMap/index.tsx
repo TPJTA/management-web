@@ -171,11 +171,15 @@ const analysisMap = function () {
       <div className="analysis-map-header">
         <div className="analysis-map-header-item">
           <div className="analysis-map-header-number">3912410</div>
-          <div className="analysis-map-header-title">{2018}年总收入</div>
+          <div className="analysis-map-header-title">
+            {new Date().getFullYear()}年总收入
+          </div>
         </div>
         <div className="analysis-map-header-item">
           <div className="analysis-map-header-number">1212310</div>
-          <div className="analysis-map-header-title">{2018}年总支出</div>
+          <div className="analysis-map-header-title">
+            {new Date().getFullYear()}年总支出
+          </div>
         </div>
       </div>
       <div style={{ width: "100%", height: "100%" }} ref={chart}></div>

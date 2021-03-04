@@ -11,13 +11,20 @@
   }
 }
 .analysis-table-content {
+  position: relative;
+  height: calc(100% - 30px);
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 6px;
   text-align: center;
-  font-size: 12px;
-  &-header {
-    color: rgb(97, 210, 247);
+  font-size: 16px;
+  color: #fff;
+  overflow: hidden;
+  &-header,
+  &-body {
+    table {
+      border-collapse: separate;
+      border-spacing: 0 6px;
+      width: 100%;
+    }
     td:nth-of-type(1) {
       width: 20%;
     }
@@ -25,10 +32,28 @@
       width: 60%;
     }
   }
+  &-header {
+    height: 40px;
+    color: rgb(97, 210, 247);
+  }
   &-body {
-    font-size: 12px;
-    color: #fff;
-    overflow: hidden;
+    height: calc(100% - 40px);
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none; /* Chrome Safari */
+    }
+  }
+  &-scroll {
+    position: absolute;
+    top: 40px;
+    right: 5px;
+    width: 3px;
+    background: rgb(50, 114, 136);
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.2s;
   }
 }
 .color(@n,@i:1) when(@i <= @n) {

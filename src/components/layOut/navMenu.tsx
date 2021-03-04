@@ -27,17 +27,17 @@ const navMenu: React.FC<any> = function (props) {
           if (!item.show) {
             return "";
           }
-          if (item.children) {
+          if ("children" in item) {
             return (
               <SubMenu
                 key={item.path}
                 icon={item.icon && React.createElement(item.icon)}
                 title={item.name}
               >
-                {item.children.map(
+                {item.children?.map(
                   (routerItem: routeItem) =>
                     routerItem.show &&
-                    !routerItem.redirect &&
+                    !("redirect" in routerItem) &&
                     !/:/.test(String(routerItem.path)) && (
                       <Menu.Item
                         key={routerItem.path}
@@ -55,7 +55,7 @@ const navMenu: React.FC<any> = function (props) {
           } else {
             return (
               item.show &&
-              !item.redirect && (
+              !("redirect" in item) && (
                 <Menu.Item
                   key={item.path}
                   icon={item.icon && React.createElement(item.icon)}

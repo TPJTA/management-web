@@ -5,16 +5,19 @@ import { loginOut } from "@/stores/user/action";
 import { Dispatch } from "redux";
 import { removeCookie } from "@/libs/tool";
 import { Layout, Avatar, Dropdown, Menu, Affix } from "antd";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   UserOutlined,
   CloseSquareOutlined,
+  ShopOutlined,
 } from "@ant-design/icons";
+import { routeItem } from "@/routers/config";
 import NavMenu from "./navMenu";
 import "./index.less";
 const { Header, Sider, Content } = Layout;
+
 const storeToProps = (store: storeType) => ({
   user: store.user,
 });
@@ -24,8 +27,13 @@ const dispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loginOut());
   },
 });
-const layOut: React.FC<any> = function (props) {
+
+interface props extends RouteComponentProps, storeType {
+  navList: routeItem[];
+}
+const layOut: React.FC<props> = function (props) {
   const [collapsed, setCollapsed] = useState(false);
+  //通过路径获取路由的name
   const getTitle = (path: string): string => {
     const getItem = (arr: any): any => {
       for (let i = 0; i < arr.length; i++) {
@@ -63,10 +71,12 @@ const layOut: React.FC<any> = function (props) {
     <Layout style={{ minHeight: "100%" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <Affix>
+          <div className="sider-logo">
+            {collapsed ? <ShopOutlined /> : <span>智慧商城管理员</span>}
+          </div>
           <NavMenu navList={props.navList} history={props.history} />
         </Affix>
       </Sider>
-
       <Layout>
         <Header
           style={{ paddingLeft: "20px" }}

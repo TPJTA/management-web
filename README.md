@@ -1,46 +1,70 @@
-# Getting Started with Create React App
+# 项目说明
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+`management-web`是一个电商后台管理系统的前端项目，基于React+Antd实现。主要包括商品管理、商品查看、订单管理、数据分析，权限设置等功能。
 
-## Available Scripts
+## 技术选型
 
-In the project directory, you can run:
+技术 | 说明
+----|----
+[React](https://zh-hans.reactjs.org/) | 前端框架
+[React-router](https://reactrouter.com/) | 路由框架
+[Redux](https://redux.js.org/) | 全局状态管理框架
+[TypeScript](https://www.typescriptlang.org/) | JavaScript的超集
+[Less](http://lesscss.org/) | CSS预处理语言
+[Antd](https://ant.design/) | 前端UI框架
+[Echarts](https://echarts.apache.org/zh/index.html) | 图表框架
+[Js-cookie](https://github.com/js-cookie/js-cookie) | cookie管理工具
 
-### `yarn start`
+## 项目布局
+```
+├─ src
+│  ├─ assets -- 静态图片资源文件
+│  ├─ components -- 组件封装
+│  ├─ libs -- 工具函数
+│  ├─ pages
+│  │  ├─ analysis -- 数据分析页面
+│  │  ├─ Exception -- 错误页面
+│  │  ├─ login -- 登录页面
+│  │  ├─ main -- 主页
+│  │  ├─ manage -- 管理中心页面
+│  │  └─ setting -- 设置页面
+│  ├─ routers -- router路由配置及渲染
+│  └─ stores -- Redux的状态管理
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 运行项目（nodejs 6.0+）
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+ npm i  或者运行  yarn(推荐)
+  
+ npm start
 
-### `yarn test`
+ npm run build （发布）
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 总结
 
-### `yarn build`
+## 个人感悟
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. react-hook方便了我对代码的读写。同时由于在函数中，我不需要修改函数的this也能直接访问到state和props。同时如果一段代码需要在初次渲染和再次渲染中都执行，在class中需要写componentDidMount和componentDidUpdate两个生命周期，而现在只需要写一个useEffect就能实现。
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. 在学习了vue-router后，我才发现react-router的实现方式十分原始，需要自己渲染出路由组件，并且没有像vue-router那样有导航守卫和路由原信息。所以当使用权限控制时,需要通过当前状态自动生成该用户的访问路由。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Less的使用方便我对css的编写，css的嵌套书写极大的方便了我对结构层级的理解。同时如果同一级的子元素每个都用自己不一样的样式，还可以通过Less的递归方式来快速实现。
 
-### `yarn eject`
+4. TypeScript进一步提高了代码的基本逻辑，我可以使用接口来设置我想要得到对象，从而对props和state进行约束。同时如果该属性是可选的，也需要我使用in来进行判断才能使用，如果在js中我可能会直接访问，然后在用if判断是否为undefined后使用。
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+5. eslint规范了我的代码，在此之前我的代码规范全靠自觉，如果有一段代码十分复杂，那我有时候就会忘记遵守有些代码规范，而使用eslint会提示我哪些地方需要写空格，那些需要换行，使用这种菜鸟也能写出规范的代码。
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 项目的不足
+1. 没有使用mock来模拟后台，有些需要请求后台的异步函数都是通过定时器来模拟实现的，不太符合实际需求。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2. 在有些地方为了图方便而使用any，这个情况主要出现在为第三方组件传递回调函数的情况，由于不想查看该函数可以会传递的参数，所以直接使用将参数表示为any。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# 部分截图
+## 登录
+## 主页
+## 商品管理
+## 订单管理
+## 数据分析
+## 权限设置
