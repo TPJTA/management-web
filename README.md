@@ -63,8 +63,28 @@
 
 # 部分截图
 ## 登录
+
+<img src="https://github.com/TPJTA/management-web/blob/master/screen/%E7%99%BB%E5%BD%95.jpg"/>
+
 ## 主页
+
+<img src="https://github.com/TPJTA/management-web/blob/master/screen/%E4%B8%BB%E9%A1%B5.jpg"/>
+
 ## 商品管理
+
+<img src="https://github.com/TPJTA/management-web/blob/master/screen/%E5%95%86%E5%93%81%E7%AE%A1%E7%90%861.jpg"/>
+<img src="https://github.com/TPJTA/management-web/blob/master/screen/%E5%95%86%E5%93%81%E7%AE%A1%E7%90%862.jpg"/>
+
 ## 订单管理
+
+<img src="https://github.com/TPJTA/management-web/blob/master/screen/%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%861.jpg"/>
+<img src="https://github.com/TPJTA/management-web/blob/master/screen/%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%862.jpg"/>
+
 ## 数据分析
+
+<img src="https://github.com/TPJTA/management-web/blob/master/screen/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90.jpg"/>
+
 ## 权限设置
+
+<img src="https://github.com/TPJTA/management-web/blob/master/screen/%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE1.jpg"/>
+<img src="https://github.com/TPJTA/management-web/blob/master/screen/%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE2.jpg"/>
