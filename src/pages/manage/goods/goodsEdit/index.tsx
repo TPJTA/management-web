@@ -22,8 +22,6 @@ const goodsEdit: React.FC<props> = function (props) {
   const [previewImage, setPreviewImage] = useState("");
   const [imgList, setImgList] = useState<Array<any>>([]);
   const finishEdit = (val: any) => {
-    console.log(val);
-
     props.setView({ ...val, img: imgList.map((item) => item.thumbUrl) });
   };
   const checkboxOptions = [
@@ -62,7 +60,6 @@ const goodsEdit: React.FC<props> = function (props) {
     const { onSuccess, onError, file, onProgress } = options;
     let num = 0;
     let timer = setInterval(() => {
-      console.log(num);
       onProgress({ percent: ++num });
       if (num >= 100) {
         clearInterval(timer);

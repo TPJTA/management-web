@@ -71,10 +71,12 @@ const layOut: React.FC<props> = function (props) {
     <Layout style={{ minHeight: "100%" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <Affix>
-          <div className="sider-logo">
-            {collapsed ? <ShopOutlined /> : <span>智慧商城管理员</span>}
+          <div>
+            <div className="sider-logo">
+              {collapsed ? <ShopOutlined /> : <span>智慧商城管理员</span>}
+            </div>
+            <NavMenu navList={props.navList} history={props.history} />
           </div>
-          <NavMenu navList={props.navList} history={props.history} />
         </Affix>
       </Sider>
       <Layout>

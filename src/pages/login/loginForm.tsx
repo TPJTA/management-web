@@ -60,7 +60,6 @@ const LoginForm: React.FC<propsType> = function (props: propsType) {
       }
       props.setName(value.username);
       props.setIdentity(value.identity);
-      console.log(props.userInformation.access);
 
       props.setAccess({
         access: props.userInformation.access[value.identity],

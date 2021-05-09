@@ -39,8 +39,6 @@ const Setting: React.FC<props> = function (props: props) {
     return result.join("/");
   };
   const getAccessValue = (accessName: string) => {
-    console.log(accessName);
-
     let accessArr = accessName.split("/");
     return accessArr.map((item) => {
       if (item === "管理员") {
