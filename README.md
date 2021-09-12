@@ -1,6 +1,6 @@
 # 项目说明
 
-[management-web](http://110.42.234.93/management/)是一个电商后台管理系统的前端项目，基于React+Antd实现。主要包括商品管理、商品查看、订单管理、数据分析，权限设置等功能。
+[management-web](http://testingecs.top/management/)是一个电商后台管理系统的前端项目，基于React+Antd实现。主要包括商品管理、商品查看、订单管理、数据分析，权限设置等功能。
 
 ## 技术选型
 
