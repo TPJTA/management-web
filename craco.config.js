@@ -8,6 +8,11 @@ module.exports = {
     resolve: {
       extensions: [".tsx", ".jsx", ".ts", ".js"],
     },
+    configure: {
+      output: {
+        publicPath: "/management/",
+      },    
+    }
   },
   plugins: [
     {
